@@ -93,12 +93,6 @@ function Row({ row }) {
   );
 }
 
-// function CollapsibleTable() {
-//   return (
-
-//   );
-// }
-
 function Order() {
   const [product, setProduct] = React.useState([]);
   React.useEffect(() => {

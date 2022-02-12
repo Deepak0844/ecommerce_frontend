@@ -1,23 +1,23 @@
 import React from "react";
 import { Layout, Menu } from "antd";
 import { useState } from "react";
-// import TableChartIcon from "@mui/icons-material/TableChart";
-// import LinkIcon from "@mui/icons-material/Link";
-// import DashboardIcon from "@mui/icons-material/Dashboard";
-// import { Visibility } from "@material-ui/icons";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu1 from "@mui/material/Menu";
 import IconButton from "@mui/material/IconButton";
-import NewUserTable from "../NewUserTable/NewUserTable";
-import OrderTable from "../OrderTable/OrderTable";
-import Home from "../../Pages/Home/Home";
-import CreateProduct from "../../Pages/CreateProduct/CreateProduct";
-import ProductList from "../../Pages/ProductList/ProductList";
+import Home from "../Pages/Home";
+import CreateProduct from "../Pages/CreateProduct";
+import ProductList from "../Pages/ProductList";
 //router
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import EditProduct from "../../Pages/EditProduct/EditProduct";
+import EditProduct from "../Pages/EditProduct";
+import UserList from "../Pages/UserList";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import PersonIcon from "@mui/icons-material/Person";
+import Inventory2Icon from "@mui/icons-material/Inventory2";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 
 const { Header, Content, Sider } = Layout; //for dashboard layout
 export default function AdminDashBoard() {
@@ -26,7 +26,6 @@ export default function AdminDashBoard() {
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  console.log(history);
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -34,7 +33,7 @@ export default function AdminDashBoard() {
     <React.Fragment>
       <Layout>
         <Sider
-          style={{ zIndex: 1 }}
+          style={{ zIndex: 2 }}
           breakpoint="lg"
           collapsedWidth="0"
           onBreakpoint={(broken) => {
@@ -44,7 +43,20 @@ export default function AdminDashBoard() {
             console.log(collapsed, type);
           }}
         >
-          <div className="logo" />
+          <h2
+            className="logo"
+            style={{
+              color: "white",
+              textAlign: "center",
+              paddingTop: "10px",
+              fontFamily: "poppins",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <AdminPanelSettingsIcon fontSize="large" />
+            Admin
+          </h2>
           <Menu
             theme="dark"
             mode="inline"
@@ -57,16 +69,43 @@ export default function AdminDashBoard() {
               }}
               key="1"
             >
-              Home
+              <b style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                <DashboardIcon />
+                Dashboard
+              </b>
             </Menu.Item>
-            <Menu.Item key="2">Users</Menu.Item>
+            <Menu.Item
+              onClick={() => {
+                history.push("/admin/users");
+              }}
+              key="2"
+            >
+              <b style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                <PersonIcon />
+                Users
+              </b>
+            </Menu.Item>
             <Menu.Item
               onClick={() => {
                 history.push("/admin/product");
               }}
               key="3"
             >
-              Products
+              <b style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                <Inventory2Icon />
+                Products
+              </b>
+            </Menu.Item>
+            <Menu.Item
+              onClick={() => {
+                history.push("/create/product");
+              }}
+              key="4"
+            >
+              <b style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                <AddBoxIcon />
+                Add Products
+              </b>
             </Menu.Item>
           </Menu>
         </Sider>
@@ -128,6 +167,9 @@ export default function AdminDashBoard() {
                 </Route>
                 <Route exact path="/edit/:id">
                   <EditProduct />
+                </Route>
+                <Route exact path="/admin/users">
+                  <UserList />
                 </Route>
               </Switch>
             </div>

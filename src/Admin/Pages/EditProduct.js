@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { userRequest } from "../../../requestMethod";
+import { userRequest } from "../../requestMethod";
 import { useParams, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -12,9 +12,10 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import FormHelperText from "@mui/material/FormHelperText";
-import firebaseFileUpload from "../../Firebase";
-import Spinner from "../../../Components/Spinner";
+import firebaseFileUpload from "../Firebase";
+import Spinner from "../../Components/Spinner";
 
+//edit product
 function EditProduct() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);

@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import ChartData from "../../Components/Chart/Chart";
-import NewUserTable from "../../Components/NewUserTable/NewUserTable";
-import OrderTable from "../../Components/OrderTable/OrderTable";
-import Stats from "../../Components/Stats/Stats";
+import ChartData from "../Components/Chart";
+import NewUserTable from "../Components/NewUserTable";
+import OrderTable from "../Components/OrderTable";
+import Stats from "../Components/Stats";
 
 function Home() {
   const Container = styled.div``;

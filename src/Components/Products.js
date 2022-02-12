@@ -22,8 +22,8 @@ function Products({ category, filters, sort }) {
     axios
       .get(
         category
-          ? `http://localhost:9000/product?category=${category}`
-          : "http://localhost:9000/product"
+          ? `https://backendecommerceapp.herokuapp.com/product?category=${category}`
+          : "https://backendecommerceapp.herokuapp.com/product"
       )
       .then((res) => setProducts(res.data))
       .catch((err) => console.log(err));

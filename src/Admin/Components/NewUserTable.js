@@ -8,7 +8,7 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import { userRequest } from "../../../requestMethod";
+import { userRequest } from "../../requestMethod";
 import styled from "styled-components";
 
 const Container = styled.div`

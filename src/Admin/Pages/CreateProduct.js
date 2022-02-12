@@ -10,9 +10,9 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import FormHelperText from "@mui/material/FormHelperText";
-import firebaseFileUpload from "../../Firebase";
-import { userRequest } from "../../../requestMethod";
-import Spinner from "../../../Components/Spinner";
+import firebaseFileUpload from "../Firebase";
+import { userRequest } from "../../requestMethod";
+import Spinner from "../../Components/Spinner";
 //
 const Container = styled.form`
   display: flex;
@@ -45,6 +45,7 @@ const FileUpload = style("input")({
   display: "none",
 });
 
+//create products
 function CreateProduct() {
   //file uploader
   const [progress, setProgress] = useState(0); //progress of uploading
