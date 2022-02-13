@@ -13,6 +13,10 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { userRequest } from "../requestMethod";
+import BackDrop from "../Components/BackDrop";
+import { useSelector } from "react-redux";
+import NavBar from "../Components/NavBar";
+import Footer from "../Components/Footer";
 
 function Row({ row }) {
   const [open, setOpen] = React.useState(false);
@@ -53,7 +57,7 @@ function Row({ row }) {
                     <TableCell align="center">Product image</TableCell>
                     <TableCell align="center">Order ID</TableCell>
                     <TableCell align="center">Quantity</TableCell>
-                    <TableCell align="center">Price</TableCell>
+                    <TableCell align="center">Price (₹)</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -95,33 +99,48 @@ function Row({ row }) {
 
 function Order() {
   const [product, setProduct] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
+  const userId = useSelector(
+    (state) => state.user?.currentUser?.loginData?._id
+  );
   React.useEffect(() => {
+    setLoading(true);
     userRequest
-      .get("/order/find/61ffa1068cc1d2c97f94ea3b")
-      .then((res) => setProduct(res.data));
+      .get(`/order/find/${userId}`)
+      .then((res) => {
+        setProduct(res.data);
+        setLoading(false);
+      })
+      .catch((err) => setLoading(false));
   }, []);
 
   return (
-    <div>
-      <TableContainer component={Paper}>
-        <Table aria-label="collapsible table">
-          <TableHead style={{ background: "tomato" }}>
-            <TableRow>
-              <TableCell style={{ width: "10px" }} />
-              <TableCell align="center">User ID</TableCell>
-              <TableCell align="center">Ordered At</TableCell>
-              <TableCell align="center">Status</TableCell>
-              <TableCell align="center">Total amount</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {product.map((row, index) => (
-              <Row key={index} row={row} />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+    <>
+      <NavBar />
+      {loading ? (
+        <BackDrop />
+      ) : (
+        <TableContainer sx={{ marginTop: "20px" }} component={Paper}>
+          <h4 style={{ fontFamily: "poppins", padding: "10px 0px" }}>Orders</h4>
+          <Table aria-label="collapsible table">
+            <TableHead style={{ background: "tomato" }}>
+              <TableRow>
+                <TableCell style={{ width: "10px" }} />
+                <TableCell align="center">User ID</TableCell>
+                <TableCell align="center">Ordered At</TableCell>
+                <TableCell align="center">Status</TableCell>
+                <TableCell align="center">Total amount (₹)</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {product?.map((row, index) => (
+                <Row key={index} row={row} />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+    </>
   );
 }
 

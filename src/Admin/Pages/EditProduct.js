@@ -14,6 +14,8 @@ import Select from "@mui/material/Select";
 import FormHelperText from "@mui/material/FormHelperText";
 import firebaseFileUpload from "../Firebase";
 import Spinner from "../../Components/Spinner";
+import { toast } from "react-toastify";
+import BackDrop from "../../Components/BackDrop";
 
 //edit product
 function EditProduct() {
@@ -102,7 +104,10 @@ function UpdateProduct({ product }) {
     editedproduct.colour = editedproduct.colour.split(",");
     userRequest
       .put(`/product/${product._id}`, editedproduct)
-      .then(() => history.push("/admin/product"))
+      .then(() => {
+        history.push("/admin/product");
+        toast.success("Product updated successfully");
+      })
       .catch((err) => console.log(err.response.data.message));
   };
   return (

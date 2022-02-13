@@ -26,6 +26,7 @@ import {
 } from "../redux/action/userAction";
 import { publicRequest } from "../requestMethod";
 import Spinner from "../Components/Spinner";
+import { toast } from "react-toastify";
 
 const Container = styled.div`
   display: flex;
@@ -133,7 +134,11 @@ function SignUp() {
     const { confirmPassword, ...other } = newUser;
     publicRequest
       .post("/auth/signup", other)
-      .then((res) => dispatch(signupSuccess()))
+      .then((res) => {
+        dispatch(signupSuccess());
+        toast.success(res.data.message);
+        history.push("/signin");
+      })
       .catch((err) => dispatch(signupFailed(err.response.data.message)));
   };
   return (
@@ -244,6 +249,20 @@ function SignUp() {
           >
             Sign Up{isFetching && <Spinner />}
           </Button>
+          <p style={{ margin: 0 }}>
+            Already have an account?
+            <span>
+              <Button
+                onClick={() => {
+                  history.push("/signin");
+                }}
+              >
+                <span style={{ textDecoration: "underLine", color: "white" }}>
+                  Sign In
+                </span>
+              </Button>
+            </span>
+          </p>
         </Form>
       </WrapperRight>
     </Container>

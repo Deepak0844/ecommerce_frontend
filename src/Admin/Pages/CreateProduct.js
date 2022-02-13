@@ -13,6 +13,8 @@ import FormHelperText from "@mui/material/FormHelperText";
 import firebaseFileUpload from "../Firebase";
 import { userRequest } from "../../requestMethod";
 import Spinner from "../../Components/Spinner";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 //
 const Container = styled.form`
   display: flex;
@@ -47,6 +49,7 @@ const FileUpload = style("input")({
 
 //create products
 function CreateProduct() {
+  const history = useHistory();
   //file uploader
   const [progress, setProgress] = useState(0); //progress of uploading
   const [image, setImage] = useState(""); //file
@@ -90,6 +93,10 @@ function CreateProduct() {
     product.colour = product.colour.split(",");
     userRequest
       .post("/product", product)
+      .then(() => {
+        toast.success("Product added successfully");
+        history.push("/admin/product");
+      })
       .catch((err) => console.log(err.response.data.message));
     setImageError(false);
   };

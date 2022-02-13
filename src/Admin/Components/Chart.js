@@ -47,7 +47,9 @@ function ChartData() {
   }, []);
   return (
     <Container style={{ padding: "10px", border: "none" }}>
-      <Chart data={chart} title="User Analytics" grid dataKey="Active User" />
+      {chart && (
+        <Chart data={chart} title="User Analytics" grid dataKey="Active User" />
+      )}
     </Container>
   );
 }

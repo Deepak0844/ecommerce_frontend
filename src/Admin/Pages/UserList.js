@@ -14,6 +14,8 @@ import { userRequest } from "../../requestMethod";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { toast } from "react-toastify";
+import BackDrop from "../../Components/BackDrop";
 
 const Container = styled.div`
   padding: 10px;
@@ -54,22 +56,35 @@ export default function UserList() {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [user, setUser] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
   useEffect(() => {
+    setLoading(true);
     userRequest
       .get("/user")
-      .then((res) => setUser(res.data))
-      .catch((err) => console.log(err.response.data.message));
+      .then((res) => {
+        setUser(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+        setLoading(false);
+      });
   }, [refresh]);
 
   const deleteUser = (id) => {
+    setLoading(true);
     userRequest
       .delete(`/user/${id}`)
       .then(() => {
-        console.log("user deleted successfully");
+        toast.success("user deleted successfully");
         setRefresh(!refresh);
+        setLoading(false);
       })
-      .catch((err) => console.log(err.response.data.message));
+      .catch((err) => {
+        console.log(err.response.data.message);
+        setLoading(false);
+      });
   };
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -82,66 +97,81 @@ export default function UserList() {
 
   return (
     <Container>
-      <Title>Users</Title>
-      <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        <TableContainer sx={{ maxHeight: 440 }}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                {columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{ minWidth: column.minWidth }}
-                  >
-                    <b>{column.label}</b>
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {user
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
-                      {columns.map((column) => {
-                        const value = row[column.id];
+      {loading ? (
+        <BackDrop />
+      ) : (
+        <>
+          <Title>Users</Title>
+          <Paper sx={{ width: "100%", overflow: "hidden" }}>
+            <TableContainer sx={{ maxHeight: 440 }}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                  <TableRow>
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth }}
+                      >
+                        <b>{column.label}</b>
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {user &&
+                    user
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row) => {
                         return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.type === "time" ? (
-                              new Date(value).toDateString()
-                            ) : column.type === "button" ? (
-                              <>
-                                <Button
-                                  color="error"
-                                  onClick={() => deleteUser(row._id)}
-                                >
-                                  <DeleteIcon />
-                                </Button>
-                              </>
-                            ) : (
-                              value
-                            )}
-                          </TableCell>
+                          <TableRow
+                            hover
+                            role="checkbox"
+                            tabIndex={-1}
+                            key={row._id}
+                          >
+                            {columns.map((column) => {
+                              const value = row[column.id];
+                              return (
+                                <TableCell key={column.id} align={column.align}>
+                                  {column.type === "time" ? (
+                                    new Date(value).toDateString()
+                                  ) : column.type === "button" ? (
+                                    <>
+                                      <Button
+                                        color="error"
+                                        onClick={() => deleteUser(row._id)}
+                                      >
+                                        <DeleteIcon />
+                                      </Button>
+                                    </>
+                                  ) : (
+                                    value
+                                  )}
+                                </TableCell>
+                              );
+                            })}
+                          </TableRow>
                         );
                       })}
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 20]}
-          component="div"
-          count={user.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 20]}
+              component="div"
+              count={user.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Paper>
+        </>
+      )}
     </Container>
   );
 }

@@ -70,7 +70,7 @@ function Footer() {
         </ContactItem>
         <ContactItem>
           <EmailIcon style={{ marginRight: "10px" }} />
-          No:22 Chennai ,India
+          contact@gmail.com
         </ContactItem>
       </Right>
     </Container>

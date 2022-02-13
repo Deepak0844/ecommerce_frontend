@@ -67,9 +67,9 @@ function ProductList() {
               id="demo-simple-select-autowidth"
               onChange={handleFilters}
               autoWidth
-              value=""
+              value={filters.colour}
               name="colour"
-              label="Size"
+              label="colour"
             >
               <MenuItem value="white">white</MenuItem>
               <MenuItem value="black">black</MenuItem>
@@ -89,7 +89,7 @@ function ProductList() {
               id="demo-simple-select-autowidth"
               onChange={handleFilters}
               autoWidth
-              value=""
+              value={filters.size}
               name="size"
               label="Size"
             >

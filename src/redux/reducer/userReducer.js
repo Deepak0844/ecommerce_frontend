@@ -15,6 +15,7 @@ const userReducer = (state = initialValue.user, action) => {
         currentUser: null,
         isFetching: true,
         error: "",
+        isLogin: false,
       };
     case LOGIN_SUCCESS:
       return {
@@ -22,6 +23,7 @@ const userReducer = (state = initialValue.user, action) => {
         currentUser: action.payload,
         isFetching: false,
         error: "",
+        isLogin: true,
       };
     case LOGIN_FAILED:
       return {
@@ -29,6 +31,7 @@ const userReducer = (state = initialValue.user, action) => {
         currentUser: null,
         isFetching: false,
         error: action.payload,
+        isLogin: false,
       };
     case LOGOUT:
       return {
@@ -36,6 +39,7 @@ const userReducer = (state = initialValue.user, action) => {
         currentUser: null,
         isFetching: false,
         error: "",
+        isLogin: false,
       };
     case SIGNUP_START:
       return {
@@ -43,6 +47,7 @@ const userReducer = (state = initialValue.user, action) => {
         currentUser: null,
         isFetching: true,
         error: "",
+        isLogin: false,
       };
     case SIGNUP_SUCCESS:
       return {
@@ -50,6 +55,7 @@ const userReducer = (state = initialValue.user, action) => {
         currentUser: null,
         isFetching: false,
         error: "",
+        isLogin: false,
       };
     case SIGNUP_FAILED:
       return {
@@ -57,6 +63,7 @@ const userReducer = (state = initialValue.user, action) => {
         currentUser: null,
         isFetching: false,
         error: action.payload,
+        isLogin: false,
       };
     default:
       return state;

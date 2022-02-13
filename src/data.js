@@ -33,7 +33,7 @@ export const categories = [
     id: 2,
     img: "https://m.media-amazon.com/images/I/81egiN7snlL._UL1500_.jpg",
     title: "Men's Jacket",
-    category: "jacket",
+    category: "Mens",
   },
   {
     id: 3,

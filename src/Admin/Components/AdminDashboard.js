@@ -5,11 +5,11 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu1 from "@mui/material/Menu";
 import IconButton from "@mui/material/IconButton";
-import Home from "../Pages/Home";
+import Dashboard from "../Pages/Dashboard";
 import CreateProduct from "../Pages/CreateProduct";
 import ProductList from "../Pages/ProductList";
 //router
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Router } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import EditProduct from "../Pages/EditProduct";
 import UserList from "../Pages/UserList";
@@ -18,9 +18,15 @@ import PersonIcon from "@mui/icons-material/Person";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import AdminSignIn from "../Pages/AdminSignIn";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/action/userAction";
+import AdminRouter from "../../Router/AdminRouter";
+import { Suspense } from "react";
 
 const { Header, Content, Sider } = Layout; //for dashboard layout
 export default function AdminDashBoard() {
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
   const handleMenu = (event) => {
@@ -65,7 +71,7 @@ export default function AdminDashBoard() {
           >
             <Menu.Item
               onClick={() => {
-                history.push("/admin/home");
+                history.push("/admin/dashboard");
               }}
               key="1"
             >
@@ -98,7 +104,7 @@ export default function AdminDashBoard() {
             </Menu.Item>
             <Menu.Item
               onClick={() => {
-                history.push("/create/product");
+                history.push("/admin/create/product");
               }}
               key="4"
             >
@@ -145,6 +151,8 @@ export default function AdminDashBoard() {
                 <MenuItem
                   onClick={() => {
                     setAnchorEl(null);
+                    dispatch(logout());
+                    history.push("/signin");
                   }}
                 >
                   Log Out
@@ -156,8 +164,16 @@ export default function AdminDashBoard() {
             <div className="site-layout-background">
               {/* adding all components */}
               <Switch>
-                <Route exact path="/admin/home">
-                  <Home />
+                <Suspense fallback={false}>
+                  <Route
+                    path="/"
+                    name="protected pages"
+                    render={(props) => <AdminRouter {...props} />}
+                  />
+                </Suspense>
+              </Switch>
+              {/* <Route exact path="/admin/dashboard">
+                  <Dashboard />
                 </Route>
                 <Route exact path="/admin/product">
                   <ProductList />
@@ -171,7 +187,7 @@ export default function AdminDashBoard() {
                 <Route exact path="/admin/users">
                   <UserList />
                 </Route>
-              </Switch>
+              </Switch> */}
             </div>
           </Content>
         </Layout>

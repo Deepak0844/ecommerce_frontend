@@ -13,7 +13,6 @@ function Home() {
       <NavBar />
       <Slider />
       <Categories />
-      <Products />
       <Footer />
     </Container>
   );

@@ -167,7 +167,7 @@ function Cart() {
   const onToken = (token) => {
     setStripeToken(token);
   };
-  console.log(stripeToken);
+
   //cart product by user
   const cartProductByUser =
     cart && cart.product?.filter((item) => item.userId === user?._id);

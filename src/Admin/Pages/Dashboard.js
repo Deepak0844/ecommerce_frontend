@@ -5,7 +5,7 @@ import NewUserTable from "../Components/NewUserTable";
 import OrderTable from "../Components/OrderTable";
 import Stats from "../Components/Stats";
 
-function Home() {
+function Dashboard() {
   const Container = styled.div``;
   const TableContainer = styled.div`
     display: flex;
@@ -31,4 +31,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Dashboard;

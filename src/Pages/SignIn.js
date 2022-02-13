@@ -97,7 +97,16 @@ const Error = styled.h6`
   padding: 5px;
   text-align: center;
 `;
-
+const SignInBtn = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+const ForotPassBtn = styled.p`
+  margin: 0;
+  font-family: "poppins";
+  padding: 0;
+`;
 function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
@@ -129,7 +138,10 @@ function SignIn() {
     dispatch(loginStarts());
     publicRequest
       .post("/auth/signin", signinUser)
-      .then((res) => dispatch(loginSuccess(res.data)))
+      .then((res) => {
+        dispatch(loginSuccess(res.data));
+        history.push("/");
+      })
       .catch((err) => {
         dispatch(loginFailed(err.response.data.message));
       });
@@ -196,6 +208,30 @@ function SignIn() {
           >
             Sign In {isFetching && <Spinner />}
           </Button>
+          <SignInBtn>
+            <p style={{ margin: 0, display: "inline" }}>
+              Don't have an account?
+              <Button
+                style={{ color: "white", textDecoration: "underLine" }}
+                onClick={() => {
+                  history.push("/signup");
+                }}
+              >
+                Sign Up
+              </Button>
+            </p>
+            <Button
+              color="warning"
+              onClick={() => {
+                history.push("/forgot-password");
+              }}
+            >
+              <ForotPassBtn>Forgot Password?</ForotPassBtn>
+            </Button>
+            <Button onClick={() => history.push("/admin/signin")} color="error">
+              Login as Admin
+            </Button>
+          </SignInBtn>
         </Form>
       </WrapperRight>
     </Container>

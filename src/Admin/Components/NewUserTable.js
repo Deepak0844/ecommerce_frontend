@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { userRequest } from "../../requestMethod";
 import styled from "styled-components";
+import BackDrop from "../../Components/BackDrop";
 
 const Container = styled.div`
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -28,9 +29,14 @@ function NewUserTable() {
   useEffect(() => {
     userRequest
       .get("/user/?new=true")
-      .then((res) => setNewUser(res.data))
-      .catch((err) => console.log(err.response.data.message));
+      .then((res) => {
+        setNewUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   }, []);
+
   return (
     <Container>
       <TableContainer sx={{ padding: "10px" }} component={Paper}>
@@ -41,14 +47,14 @@ function NewUserTable() {
               <TableCell>
                 <b>Name</b>
               </TableCell>
-              <TableCell align="center">
+              <TableCell align="left">
                 <b>Email</b>
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {newUser &&
-              newUser.map((row) => (
+              newUser?.map((row) => (
                 <TableRow
                   key={row._id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

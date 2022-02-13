@@ -39,7 +39,6 @@ function Products({ category, filters, sort }) {
         )
       );
   }, [products, category, filters]);
-  console.log(sort);
   useEffect(() => {
     if (sort === "newest") {
       setFilteredProducts((prev) =>
@@ -57,11 +56,11 @@ function Products({ category, filters, sort }) {
   }, [sort]);
   return (
     <Container>
-      {category
-        ? filteredProducts.map((item) => <Product item={item} key={item._id} />)
-        : products
-            .slice(0, 8)
-            .map((item) => <Product item={item} key={item._id} />)}
+      {filteredProducts.length === 0 ? (
+        <h4 style={{ fontFamily: "poppins" }}>no products available</h4>
+      ) : (
+        filteredProducts.map((item) => <Product item={item} key={item._id} />)
+      )}
     </Container>
   );
 }
