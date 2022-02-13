@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { after_checkout_success } from "../redux/action/cartAction";
 import { Result, Button } from "antd";
 import { useLocation } from "react-router";
+import NavBar from "../Components/NavBar";
 
 const Container = styled.div`
   height: 100vh;
@@ -46,25 +47,30 @@ function Success() {
       .catch((err) => console.log(err));
   }, [dispatch, currentUser]);
   return (
-    <Container>
-      <Result
-        status="success"
-        title={orderId ? `Order has been created successfully` : `Successfull.`}
-        subTitle={
-          orderId
-            ? `Your order number is ${orderId}`
-            : ` Your order is being prepared...`
-        }
-        extra={[
-          <Button key="back" onClick={() => history.push("/")} type="primary">
-            Back to Shop
-          </Button>,
-          <Button onClick={() => history.push("/orders")} key="orders">
-            Your Orders
-          </Button>,
-        ]}
-      />
-    </Container>
+    <>
+      <NavBar />
+      <Container>
+        <Result
+          status="success"
+          title={
+            orderId ? `Order has been created successfully` : `Successfull.`
+          }
+          subTitle={
+            orderId
+              ? `Your order number is ${orderId}`
+              : ` Your order is being prepared...`
+          }
+          extra={[
+            <Button key="back" onClick={() => history.push("/")} type="primary">
+              Back to Shop
+            </Button>,
+            <Button onClick={() => history.push("/orders")} key="orders">
+              Your Orders
+            </Button>,
+          ]}
+        />
+      </Container>
+    </>
   );
 }
 
