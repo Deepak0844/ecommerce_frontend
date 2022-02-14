@@ -7,15 +7,23 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  padding: 15px 10px;
   ${mobile({ padding: "0px", justifyContent: "center", gap: "10px" })};
+`;
+const Title = styled.h4`
+  font-family: "poppins";
+  padding: 10px;
 `;
 function Categories() {
   return (
-    <Container>
-      {categories.map((item) => (
-        <CategoryItem item={item} key={item.id} />
-      ))}
-    </Container>
+    <>
+      <Title>Categories</Title>
+      <Container>
+        {categories.map((item) => (
+          <CategoryItem item={item} key={item.id} />
+        ))}
+      </Container>
+    </>
   );
 }
 

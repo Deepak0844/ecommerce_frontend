@@ -23,7 +23,6 @@ const cartReducer = (state = initialValue.cart, action) => {
       };
     case DELETE_CART:
       const productToRemove = state.product.find((item) => item);
-      console.log(productToRemove);
       return {
         ...state,
         product: state.product.filter((item) => item._id !== action.payload),

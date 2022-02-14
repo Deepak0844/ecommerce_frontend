@@ -1,4 +1,3 @@
-import { Add, Remove } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
@@ -122,7 +121,8 @@ const Summary = styled.div`
   border: 0.5px solid lightgray;
   border-radius: 10px;
   padding: 20px;
-  height: 50vh;
+  padding-bottom: 0px;
+  height: 100%;
 `;
 
 const SummaryTitle = styled.h6`
@@ -288,21 +288,32 @@ function Cart() {
                 <b>₹</b> {cart?.total}
               </SummaryItemPrice>
             </SummaryItem>
-            <StripeCheckout
-              name="Deepak Shop"
-              image="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-              billingAddress
-              shippingAddress
-              description={`Your total is ₹${cart?.total}`}
-              amount={cart?.total * 100}
-              token={onToken}
-              stripeKey={KEY}
-              currency="INR"
-            >
-              <Button variant="contained" color="inherit">
-                CHECKOUT NOW
-              </Button>
-            </StripeCheckout>
+            {cart?.total !== 0 && (
+              <StripeCheckout
+                name="Deepak Shop"
+                image="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                billingAddress
+                shippingAddress
+                description={`Your total is ₹${cart?.total}`}
+                amount={cart?.total * 100}
+                token={onToken}
+                stripeKey={KEY}
+                currency="INR"
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    padding: "10px",
+                    marginTop: "-10px",
+                  }}
+                >
+                  <Button variant="contained" color="warning">
+                    CHECKOUT NOW
+                  </Button>
+                </div>
+              </StripeCheckout>
+            )}
           </Summary>
         </CartItem>
       </Wrapper>

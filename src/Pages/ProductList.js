@@ -10,10 +10,12 @@ import Select from "@mui/material/Select";
 import Footer from "../Components/Footer";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+
 const Container = styled.div``;
 const Title = styled.h2`
   font-weight: 400;
   margin: 10px;
+  font-family: "poppins";
 `;
 const FilterContainer = styled.div`
   display: flex;
@@ -71,12 +73,13 @@ function ProductList() {
               name="colour"
               label="colour"
             >
-              <MenuItem value="white">white</MenuItem>
-              <MenuItem value="black">black</MenuItem>
-              <MenuItem value="red">red</MenuItem>
-              <MenuItem value="blue">blue</MenuItem>
-              <MenuItem value="yellow">yellow</MenuItem>
-              <MenuItem value="green">green</MenuItem>
+              <MenuItem value="White">White</MenuItem>
+              <MenuItem value="Black">Black</MenuItem>
+              <MenuItem value="Red">Red</MenuItem>
+              <MenuItem value="Blue">Blue</MenuItem>
+              <MenuItem value="Yellow">Yellow</MenuItem>
+              <MenuItem value="Grey">Grey</MenuItem>
+              <MenuItem value="Green">Green</MenuItem>
             </Select>
           </FormControl>
           <FormControl sx={{ m: 1, minWidth: 80 }}>

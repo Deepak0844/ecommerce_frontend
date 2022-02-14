@@ -36,7 +36,6 @@ function NewUserTable() {
         console.log(err.response);
       });
   }, []);
-
   return (
     <Container>
       <TableContainer sx={{ padding: "10px" }} component={Paper}>
@@ -54,7 +53,7 @@ function NewUserTable() {
           </TableHead>
           <TableBody>
             {newUser &&
-              newUser?.map((row) => (
+              newUser?.slice(0, 5).map((row) => (
                 <TableRow
                   key={row._id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

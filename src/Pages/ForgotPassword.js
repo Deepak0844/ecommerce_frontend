@@ -14,7 +14,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   background-image: url("https://raw.githubusercontent.com/Deepak0844/blogger_frontend/master/public/images/1643390361953.jpeg");
-  height: calc(100vh - 56px);
+  height:100vh;
   ${tab({
     alignItems: "flex-start",
   })};

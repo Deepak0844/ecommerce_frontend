@@ -39,7 +39,7 @@ function ChartData() {
         res.data.map((dt) => {
           setChart((prev) => [
             ...prev,
-            { name: months[dt._id - 1], "Active User": dt.total },
+            { name: months[dt?._id - 1], "Active User": dt?.total },
           ]);
         })
       )
@@ -47,7 +47,7 @@ function ChartData() {
   }, []);
   return (
     <Container style={{ padding: "10px", border: "none" }}>
-      {chart && (
+      {chart.length > 0 && (
         <Chart data={chart} title="User Analytics" grid dataKey="Active User" />
       )}
     </Container>

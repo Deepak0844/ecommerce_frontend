@@ -5,6 +5,7 @@ import { popularProducts } from "../data";
 import { mobile } from "../Responsive";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import BackDrop from "./BackDrop";
 
 const Container = styled.div`
   padding: 20px;
@@ -17,16 +18,24 @@ const Container = styled.div`
 function Products({ category, filters, sort }) {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(
         category
           ? `https://backendecommerceapp.herokuapp.com/product?category=${category}`
           : "https://backendecommerceapp.herokuapp.com/product"
       )
-      .then((res) => setProducts(res.data))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        setProducts(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
   }, [category]);
 
   useEffect(() => {
@@ -54,15 +63,28 @@ function Products({ category, filters, sort }) {
       );
     }
   }, [sort]);
+  console.log(loading);
   return (
     <Container>
-      {filteredProducts.length === 0 ? (
-        <h4 style={{ fontFamily: "poppins" }}>no products available</h4>
-      ) : (
+      {filteredProducts.length > 0 ? (
         filteredProducts.map((item) => <Product item={item} key={item._id} />)
+      ) : loading ? (
+        <BackDrop />
+      ) : (
+        <h4 style={{ fontFamily: "poppins" }}>no products available</h4>
       )}
     </Container>
   );
 }
 
 export default Products;
+
+{
+  /* <Container>
+{filteredProducts.length === 0 ? (
+  <h4 style={{ fontFamily: "poppins" }}>no products available</h4>
+) : (
+  filteredProducts.map((item) => <Product item={item} key={item._id} />)
+)}
+</Container> */
+}

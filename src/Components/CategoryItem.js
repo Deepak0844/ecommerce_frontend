@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 const Container = styled.div`
   margin: 3px;
   width: 300px;
-  height: 380px;
+  height: 395px;
   background: white;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   display: flex;
@@ -13,11 +13,12 @@ const Container = styled.div`
   cursor: pointer;
   border-radius: 8px;
   overflow: hidden;
+  background: black;
 `;
 
 const Image = styled.img`
   width: 100%;
-  height: 250px;
+  height: 87%;
   object-fit: cover;
 `;
 
@@ -26,7 +27,8 @@ const Info = styled.div`
 `;
 
 const Title = styled.h2`
-  color: black;
+  color: white;
+  font-family: "poppins";
   padding-top: 5px;
   margin-bottom: 20px;
 `;
@@ -52,7 +54,6 @@ function CategoryItem({ item }) {
       <Image src={item.img} />
       <Info>
         <Title>{item.title}</Title>
-        <Button>SHOP NOW</Button>
       </Info>
     </Container>
   );

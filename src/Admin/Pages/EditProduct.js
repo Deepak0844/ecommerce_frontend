@@ -21,13 +21,25 @@ import BackDrop from "../../Components/BackDrop";
 function EditProduct() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
+    setLoading(true);
     userRequest
       .get(`/product/${id}`)
-      .then((res) => setProduct(res.data))
-      .catch((err) => console.log(err.response.data.message));
+      .then((res) => {
+        setProduct(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+        setLoading(false);
+      });
   }, [id]);
-  return <div> {product && <UpdateProduct product={product} />}</div>;
+  return (
+    <div>
+      {product && !loading ? <UpdateProduct product={product} /> : <BackDrop />}
+    </div>
+  );
 }
 
 export default EditProduct;

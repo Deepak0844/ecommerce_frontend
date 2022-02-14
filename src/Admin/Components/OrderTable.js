@@ -56,19 +56,20 @@ function OrderTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {orders?.map((row) => (
-              <TableRow
-                key={row._id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell sx={{ minWidth: 100 }} component="th" scope="row">
-                  {row.userId}
-                </TableCell>
-                <TableCell align="center">{format(row.createdAt)}</TableCell>
-                <TableCell align="center">₹ {row.amount}</TableCell>
-                <TableCell align="center">{row.status}</TableCell>
-              </TableRow>
-            ))}
+            {orders &&
+              orders.map((row) => (
+                <TableRow
+                  key={row._id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell sx={{ minWidth: 100 }} component="th" scope="row">
+                    {row.userId}
+                  </TableCell>
+                  <TableCell align="center">{format(row.createdAt)}</TableCell>
+                  <TableCell align="center">₹ {row.amount}</TableCell>
+                  <TableCell align="center">{row.status}</TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
