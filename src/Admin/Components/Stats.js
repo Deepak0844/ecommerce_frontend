@@ -1,13 +1,15 @@
-import { userRequest } from "../../requestMethod";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 const Featured = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 35px;
 `;
 const FeaturedItem = styled.div`
   flex: 1;
@@ -40,14 +42,18 @@ const FeaturedSub = styled.span`
   color: gray;
 `;
 
-function Stats() {
+function Stats({ token }) {
   const [income, setIncome] = useState([]);
   const [perc, setPerc] = useState(0);
   const [lastMInc, setLastMInc] = useState(0);
 
   useEffect(() => {
-    userRequest
-      .get("order/income")
+    axios
+      .get("https://backendecommerceapp.herokuapp.com/order/income", {
+        headers: {
+          "x-auth-token": token,
+        },
+      })
       .then((res) => {
         setLastMInc(res.data[0]?.total);
         setIncome(res.data);

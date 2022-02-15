@@ -8,9 +8,8 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import { userRequest } from "../../requestMethod";
 import styled from "styled-components";
-import BackDrop from "../../Components/BackDrop";
+import axios from "axios";
 
 const Container = styled.div`
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -24,11 +23,15 @@ const Title = styled.h4`
   font-weight: 500;
 `;
 
-function NewUserTable() {
+function NewUserTable({ token }) {
   const [newUser, setNewUser] = useState([]);
   useEffect(() => {
-    userRequest
-      .get("/user/?new=true")
+    axios
+      .get("https://backendecommerceapp.herokuapp.com/user/?new=true", {
+        headers: {
+          "x-auth-token": token,
+        },
+      })
       .then((res) => {
         setNewUser(res.data);
       })

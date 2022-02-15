@@ -35,6 +35,7 @@ export default function AdminDashBoard() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <React.Fragment>
       <Layout>
@@ -172,22 +173,6 @@ export default function AdminDashBoard() {
                   />
                 </Suspense>
               </Switch>
-              {/* <Route exact path="/admin/dashboard">
-                  <Dashboard />
-                </Route>
-                <Route exact path="/admin/product">
-                  <ProductList />
-                </Route>
-                <Route exact path="/create/product">
-                  <CreateProduct />
-                </Route>
-                <Route exact path="/edit/:id">
-                  <EditProduct />
-                </Route>
-                <Route exact path="/admin/users">
-                  <UserList />
-                </Route>
-              </Switch> */}
             </div>
           </Content>
         </Layout>

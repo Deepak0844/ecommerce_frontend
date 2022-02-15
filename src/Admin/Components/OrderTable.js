@@ -6,10 +6,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { userRequest } from "../../requestMethod";
 import { format } from "timeago.js";
 import styled from "styled-components";
 import { mobile } from "../../Responsive";
+import axios from "axios";
+
 const Container = styled.div`
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   margin: 10px;
@@ -26,11 +27,15 @@ const Title = styled.h4`
   font-weight: 500;
 `;
 
-function OrderTable() {
+function OrderTable({ token }) {
   const [orders, setOrders] = useState([]);
   useEffect(() => {
-    userRequest
-      .get("/order")
+    axios
+      .get("https://backendecommerceapp.herokuapp.com/order", {
+        headers: {
+          "x-auth-token": token,
+        },
+      })
       .then((res) => setOrders(res.data))
       .catch((err) => console.log(err.response.data.message));
   }, []);

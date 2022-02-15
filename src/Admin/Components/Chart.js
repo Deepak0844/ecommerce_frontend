@@ -8,7 +8,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import styled from "styled-components";
-import { userRequest } from "../../requestMethod";
+import axios from "axios";
 
 const Container = styled.div`
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -16,7 +16,7 @@ const Container = styled.div`
   background: white;
 `;
 
-function ChartData() {
+function ChartData({ token }) {
   const [chart, setChart] = useState([]);
   const months = [
     "jan",
@@ -33,8 +33,12 @@ function ChartData() {
     "dec",
   ];
   useEffect(() => {
-    userRequest
-      .get("user/stats")
+    axios
+      .get("https://backendecommerceapp.herokuapp.com/user/stats", {
+        headers: {
+          "x-auth-token": token,
+        },
+      })
       .then((res) =>
         res.data.map((dt) => {
           setChart((prev) => [
