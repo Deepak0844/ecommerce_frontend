@@ -16,6 +16,8 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 import BackDrop from "../../Components/BackDrop";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   padding: 10px;
@@ -58,10 +60,15 @@ export default function UserList() {
   const [refresh, setRefresh] = useState(false);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+  const token = useSelector((state) => state.user.currentUser.authToken);
   useEffect(() => {
     setLoading(true);
-    userRequest
-      .get("/user")
+    axios
+      .get("https://backendecommerceapp.herokuapp.com/user",{
+        headers: {
+          "x-auth-token": token,
+        },
+      })
       .then((res) => {
         setUser(res.data);
         setLoading(false);
