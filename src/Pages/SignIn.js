@@ -111,6 +111,7 @@ function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const { isFetching, error } = useSelector((state) => state.user);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -145,6 +146,23 @@ function SignIn() {
       .catch((err) => {
         dispatch(loginFailed(err.response.data.message));
       });
+  };
+  //demo credential
+  const handleSignin = () => {
+    const signinUser = {
+      email: "test@gmail.com",
+      password: "Test@123",
+    };
+    // dispatch(login_starts());
+    setIsLoading(true);
+    publicRequest
+      .post("/auth/signin", signinUser)
+      .then((res) => {
+        dispatch(loginSuccess(res.data));
+        setIsLoading(false);
+        history.push("/");
+      })
+      .catch(() => setIsLoading(false));
   };
   return (
     <Container>
@@ -207,6 +225,19 @@ function SignIn() {
             color="secondary"
           >
             Sign In {isFetching && <Spinner />}
+          </Button>
+          <Button
+            onClick={handleSignin}
+            disabled={isLoading}
+            sx={{
+              borderRadius: "5px",
+              boxShadow: "none",
+              padding: "5px",
+            }}
+            variant="contained"
+            color="success"
+          >
+            Sign in with demo credential {isLoading && <Spinner />}
           </Button>
           <SignInBtn>
             <p style={{ margin: 0, display: "inline" }}>

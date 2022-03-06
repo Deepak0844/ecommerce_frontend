@@ -104,6 +104,7 @@ function AdminSignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const { isFetching, error } = useSelector((state) => state.user);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -144,6 +145,29 @@ function AdminSignIn() {
         dispatch(loginFailed(err.response.data.message));
       });
   };
+
+  //demo credential
+  const handleSignin = () => {
+    const signinAdmin = {
+      email: "admin@gmail.com",
+      password: "Admin@123",
+    };
+    setIsLoading(true);
+    publicRequest
+      .post("/auth/signin", signinAdmin)
+      .then((res) => {
+        setIsLoading(false);
+        dispatch(loginSuccess(res.data));
+        if (res.data.loginData.isAdmin) {
+          history.push("/admin/dashboard");
+        } else {
+          toast.error("Your are not a Admin");
+          history.push("/signin");
+        }
+      })
+      .catch(() => setIsLoading(false));
+  };
+
   return (
     <Container>
       <WrapperLeft>
@@ -206,6 +230,19 @@ function AdminSignIn() {
             color="secondary"
           >
             Sign In {isFetching && <Spinner />}
+          </Button>
+          <Button
+            onClick={handleSignin}
+            sx={{
+              borderRadius: "5px",
+              boxShadow: "none",
+              padding: "5px",
+            }}
+            disabled={isLoading}
+            variant="contained"
+            color="success"
+          >
+            Sign in with (admin) demo credential {isLoading && <Spinner />}
           </Button>
         </Form>
       </WrapperRight>
